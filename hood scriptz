@@ -176,19 +176,5 @@ game.StarterGui:SetCore("SendNotification", {
 	    end
 	end)
 	end)
-	
-	script.Parent["ANTI-afk"].MouseButton1Click:Connect(function(ANTIAFK)
-		local vu = game:GetService("VirtualUser")
-	game:GetService("Players").LocalPlayer.Idled:connect(function()
-	   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-	   wait(1)
-	   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-	end)
-	            game.StarterGui:SetCore("SendNotification", {
-	                Title = "Anti - AFK";
-	                Text = "Enabled (No timeout)";
-	                 Duration = 20;
-			                  })
-	end)
 wait(0.2)
 loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
