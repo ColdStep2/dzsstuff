@@ -1,180 +1,493 @@
 wait(0.1)
+
+
 loadstring(game:HttpGet('https://raw.githubusercontent.com/lerkermer/lua-projects/master/SwagModeV002'))()
+
+
 wait(0.2)
+
+
 local guy = game:service "VirtualUser"
+
+
 game:service "Players".LocalPlayer.Idled:connect(
-    function()
-        guy:CaptureController()
-        guy:ClickButton2(Vector2.new())
-    end
+
+
+	function()
+
+
+		guy:CaptureController()
+
+
+		guy:ClickButton2(Vector2.new())
+
+
+	end
+
+
 )
+
+
 wait(0.2)
+
+
 -- thusky old lock
+
+
 local CC = game:GetService"Workspace".CurrentCamera
-    local Plr
-    local enabled = falseWD
-    local accomidationfactor = 0.122820192919202992299
-    local mouse = game.Players.LocalPlayer:GetMouse()
-    local placemarker = Instance.new("Part", game.Workspace)
-
-    function makemarker(Parent, Adornee, Color, Size, Size2)
-        local e = Instance.new("BillboardGui", Parent)
-        e.Name = "PP"
-        e.Adornee = Adornee
-        e.Size = UDim2.new(Size, Size2, Size, Size2)
-        e.AlwaysOnTop = true
-        local a = Instance.new("Frame", e)
-        a.Size = UDim2.new(1, 0, 1, 0)
-        a.BackgroundTransparency = 0
-        a.BackgroundColor3 = Color
-        local g = Instance.new("UICorner", a)
-        g.CornerRadius = UDim.new(50, 50)
-        return(e)
-    end
-
-    
-    local data = game.Players:GetPlayers()
-    function noob(player)
-        local character
-        repeat wait() until player.Character
-        local handler = makemarker(guimain, player.Character:WaitForChild("HumanoidRootPart"), Color3.fromRGB(107, 184, 255), 0.3, 3)
-        handler.Name = player.Name
-        player.CharacterAdded:connect(function(Char) handler.Adornee = Char:WaitForChild("HumanoidRootPart") end)
 
 
-        spawn(function()
-            while wait() do
-                if player.Character then
-                    TextLabel.Text = player.Name..tostring(player:WaitForChild("leaderstats").Wanted.Value).." | "..tostring(math.floor(player.Character:WaitForChild("Humanoid").Health))
-                end
-            end
-        end)
-    end
+local Plr
 
-    for i = 1, #data do
-        if data[i] ~= game.Players.LocalPlayer then
-            noob(data[i])
-        end
-    end
 
-    game.Players.PlayerAdded:connect(function(Player)
-        noob(Player)
-    end)
+local enabled = falseWD
 
-    spawn(function()
-        placemarker.Anchored = true
-        placemarker.CanCollide = false
-        placemarker.Size = Vector3.new(8, 8, 8)
-        placemarker.Transparency = 0.75
-        makemarker(placemarker, placemarker, Color3.fromRGB(82, 112, 234), 0.40, 0)
-    end)    
 
-mouse.KeyDown:Connect(function(k)
-    if k ~= "e" then return end
-    if enabled then
-        enabled = false
-        guimain[Plr.Name].Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    else
-        enabled = true 
-        Plr = getClosestPlayerToCursor()
-        guimain[Plr.Name].Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    end    
+local accomidationfactor = 0.122820192919202992299
+
+
+local mouse = game.Players.LocalPlayer:GetMouse()
+
+
+local placemarker = Instance.new("Part", game.Workspace)
+
+
+
+function makemarker(Parent, Adornee, Color, Size, Size2)
+
+
+	local e = Instance.new("BillboardGui", Parent)
+
+
+	e.Name = "PP"
+
+
+	e.Adornee = Adornee
+
+
+	e.Size = UDim2.new(Size, Size2, Size, Size2)
+
+
+	e.AlwaysOnTop = true
+
+
+	local a = Instance.new("Frame", e)
+
+
+	a.Size = UDim2.new(1, 0, 1, 0)
+
+
+	a.BackgroundTransparency = 0
+
+
+	a.BackgroundColor3 = Color
+
+
+	local g = Instance.new("UICorner", a)
+
+
+	g.CornerRadius = UDim.new(50, 50)
+
+
+	return(e)
+
+
+end
+
+
+
+
+local data = game.Players:GetPlayers()
+
+
+function noob(player)
+
+
+	local character
+
+
+	repeat wait() until player.Character
+
+
+	local handler = makemarker(guimain, player.Character:WaitForChild("HumanoidRootPart"), Color3.fromRGB(107, 184, 255), 0.3, 3)
+
+
+	handler.Name = player.Name
+
+
+	player.CharacterAdded:connect(function(Char) handler.Adornee = Char:WaitForChild("HumanoidRootPart") end)
+
+
+
+
+	spawn(function()
+
+
+		while wait() do
+
+
+			if player.Character then
+
+
+				TextLabel.Text = player.Name..tostring(player:WaitForChild("leaderstats").Wanted.Value).." | "..tostring(math.floor(player.Character:WaitForChild("Humanoid").Health))
+
+
+			end
+
+
+		end
+
+
+	end)
+
+
+end
+
+
+
+for i = 1, #data do
+
+
+	if data[i] ~= game.Players.LocalPlayer then
+
+
+		noob(data[i])
+
+
+	end
+
+
+end
+
+
+
+game.Players.PlayerAdded:connect(function(Player)
+
+
+	noob(Player)
+
+
 end)
 
-    function getClosestPlayerToCursor()
-        local closestPlayer
-        local shortestDistance = math.huge
 
-        for i, v in pairs(game.Players:GetPlayers()) do
-            if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
-                local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
-                local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(mouse.X, mouse.Y)).magnitude
-                if magnitude < shortestDistance then
-                    closestPlayer = v
-                    shortestDistance = magnitude
-                end
-            end
-        end
-        return closestPlayer
-    end
 
-    game:GetService"RunService".Stepped:connect(function()
-        if enabled and Plr.Character and Plr.Character:FindFirstChild("HumanoidRootPart") then
-            placemarker.CFrame = CFrame.new(Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*accomidationfactor))
-        else
-            placemarker.CFrame = CFrame.new(0, 9999, 0)
-        end
-    end)
+spawn(function()
 
-    local mt = getrawmetatable(game)
-    local old = mt.__namecall
-    setreadonly(mt, false)
-    mt.__namecall = newcclosure(function(...)
-        local args = {...}
-        if enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
-            args[3] = Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*accomidationfactor)
-            return old(unpack(args))
-        end
-        return old(...)
-    end)
-wait(0.3)
-game.StarterGui:SetCore("SendNotification", {
-	                Title = "Anti-Ban";
-	                Text = "Enabled safety protocols";
-	                 Duration = 20;
-		                  })
-	
-		Players = game:GetService("Players")
-		for _, player in pairs(Players:GetPlayers()) do
-	    -- this code will run for all players
-			if player.UserId == 163721789 or player.UserId == 15427717 or player.UserId == 8195210 or player.UserId == 28357488 or player.UserId == 17260230 or player.UserId == 201454243 or player.UserId == 179520654 or player.UserId == 201454243 or player.UserId == 16138978 or player.UserId == 228298316 or player.UserId == 32260059 or player.UserId == 9125623 or player.UserId == 11319153 or player.UserId == 34758833 or player.UserId == 16917269 or player.UserId == 89473551 or player.UserId == 63794379 or player.UserId == 93101606 then  
-				wait(1)
-				local plr = game:GetService('Players').LocalPlayer
-				plr:Kick('KICKED TO AVOID ADMIN-BAN (Admin in server) =)')
-	
-			else
-				print('Safe')
+
+	placemarker.Anchored = true
+
+
+	placemarker.CanCollide = false
+
+
+	placemarker.Size = Vector3.new(8, 8, 8)
+
+
+	placemarker.Transparency = 0.75
+
+
+	makemarker(placemarker, placemarker, Color3.fromRGB(82, 112, 234), 0.40, 0)
+
+
+end)    
+
+
+
+mouse.KeyDown:Connect(function(k)
+
+
+	if k ~= "e" then return end
+
+
+	if enabled then
+
+
+		enabled = false
+
+
+		guimain[Plr.Name].Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+
+	else
+
+
+		enabled = true 
+
+
+		Plr = getClosestPlayerToCursor()
+
+
+		guimain[Plr.Name].Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+
+
+	end    
+
+
+end)
+
+
+
+function getClosestPlayerToCursor()
+
+
+	local closestPlayer
+
+
+	local shortestDistance = math.huge
+
+
+
+	for i, v in pairs(game.Players:GetPlayers()) do
+
+
+		if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
+
+
+			local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+
+
+			local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(mouse.X, mouse.Y)).magnitude
+
+
+			if magnitude < shortestDistance then
+
+
+				closestPlayer = v
+
+
+				shortestDistance = magnitude
+
+
+			end
+
+
 		end
+
+
 	end
-		
-		
-	    local AdminList = {
-	    163721789, -- JokeTheFool  
-	    15427717,  -- Sherosama      
-	    8195210,   -- Benoxa
-	    822999,    -- AStrongMuscle  
-	    28357488,  -- UziGarage    
-	    17260230,  -- NikoSenpai 
-	    201454243, -- Papa_Mbaye 
-		179520654, -- tuhklia 
-		16138978,  -- zakblak20
-		228298316, -- theregend27
-		32260059,  -- DarkWhirlwind
-		9125623,   -- coreten
-		11319153,  -- LegacyCross
-		34758833,  -- NatsuDBlaze
-		16917269,  -- clubstar54
-		89473551,  -- CheemsBurgar
-		63794379,  -- iRenn
-		93101606,  -- iumu
-		
-	    
-	}
-	
-	game.Players.PlayerAdded:Connect(function(player)
-	    for i, v in pairs(AdminList) do
-	        if player.UserId == v then
-	            game.StarterGui:SetCore("SendNotification", {
-	                Title = "Anti-Ban";
-	                Text = "An admin has joined.. kicking!";
-	                 Duration = 20;
-	                 })
-	             wait(2)
-				plr:Kick('KICKED TO AVOID ADMIN-BAN (Admin joined) =)')
-	
-	        end
-	    end
-	end)
-	end)
+
+
+	return closestPlayer
+
+
+end
+
+
+
+game:GetService"RunService".Stepped:connect(function()
+
+
+	if enabled and Plr.Character and Plr.Character:FindFirstChild("HumanoidRootPart") then
+
+
+		placemarker.CFrame = CFrame.new(Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*accomidationfactor))
+
+
+	else
+
+
+		placemarker.CFrame = CFrame.new(0, 9999, 0)
+
+
+	end
+
+
+end)
+
+
+
+local mt = getrawmetatable(game)
+
+
+local old = mt.__namecall
+
+
+setreadonly(mt, false)
+
+
+mt.__namecall = newcclosure(function(...)
+
+
+	local args = {...}
+
+
+	if enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
+
+
+		args[3] = Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*accomidationfactor)
+
+
+		return old(unpack(args))
+
+
+	end
+
+
+	return old(...)
+
+
+end)
+
+
+wait(0.3)
+
+
+game.StarterGui:SetCore("SendNotification", {
+
+
+	Title = "Anti-Ban";
+
+
+	Text = "Enabled safety protocols";
+
+
+	Duration = 20;
+
+
+})
+
+
+
+Players = game:GetService("Players")
+
+
+for _, player in pairs(Players:GetPlayers()) do
+
+
+	-- this code will run for all players
+
+
+	if player.UserId == 163721789 or player.UserId == 15427717 or player.UserId == 8195210 or player.UserId == 28357488 or player.UserId == 17260230 or player.UserId == 201454243 or player.UserId == 179520654 or player.UserId == 201454243 or player.UserId == 16138978 or player.UserId == 228298316 or player.UserId == 32260059 or player.UserId == 9125623 or player.UserId == 11319153 or player.UserId == 34758833 or player.UserId == 16917269 or player.UserId == 89473551 or player.UserId == 63794379 or player.UserId == 93101606 then  
+
+
+		wait(1)
+
+
+		local plr = game:GetService('Players').LocalPlayer
+
+
+		plr:Kick('KICKED TO AVOID ADMIN-BAN (Admin in server) =)')
+
+
+
+	else
+
+
+		print('Safe')
+
+
+	end
+
+
+end
+
+
+
+
+local AdminList = {
+
+
+	163721789, -- JokeTheFool  
+
+
+	15427717,  -- Sherosama      
+
+
+	8195210,   -- Benoxa
+
+
+	822999,    -- AStrongMuscle  
+
+
+	28357488,  -- UziGarage    
+
+
+	17260230,  -- NikoSenpai 
+
+
+	201454243, -- Papa_Mbaye 
+
+
+	179520654, -- tuhklia 
+
+
+	16138978,  -- zakblak20
+
+
+	228298316, -- theregend27
+
+
+	32260059,  -- DarkWhirlwind
+
+
+	9125623,   -- coreten
+
+
+	11319153,  -- LegacyCross
+
+
+	34758833,  -- NatsuDBlaze
+
+
+	16917269,  -- clubstar54
+
+
+	89473551,  -- CheemsBurgar
+
+
+	63794379,  -- iRenn
+
+
+	93101606,  -- iumu
+
+
+
+
+}
+
+
+
+game.Players.PlayerAdded:Connect(function(player)
+
+
+	for i, v in pairs(AdminList) do
+
+
+		if player.UserId == v then
+
+
+			game.StarterGui:SetCore("SendNotification", {
+
+
+				Title = "Anti-Ban";
+
+
+				Text = "An admin has joined.. kicking!";
+
+
+				Duration = 20;
+
+
+			})
+
+
+			wait(2)
+
+
+			game.Players.LocalPlayer:Kick('KICKED TO AVOID ADMIN-BAN (Admin joined) =)')
+
+
+
+		end
+
+
+	end
+
+
+end)
+
+
 wait(0.2)
+
+
 loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
