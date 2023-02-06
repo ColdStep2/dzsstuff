@@ -43,7 +43,7 @@ local Plr
 local enabled = falseWD
 
 
-local accomidationfactor = 0.122820192919202992299
+local accomidationfactor = 0.146
 
 
 local mouse = game.Players.LocalPlayer:GetMouse()
